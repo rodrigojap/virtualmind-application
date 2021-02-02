@@ -15,4 +15,8 @@
     <Folder Include="Commands\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\VirtualMind.Domain\VirtualMind.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using VirtualMind.Application.Configurations;
+using VirtualMind.WebApp.Filters;
 
 namespace VirtualMind.WebApp
 {
@@ -18,8 +20,10 @@ namespace VirtualMind.WebApp
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddControllersWithViews();
+        {            
+            services.AddApplicationDI();
+            services.RegisterGlobalFilters();
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

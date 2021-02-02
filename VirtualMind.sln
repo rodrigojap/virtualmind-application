@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Infra", "4 - Infra", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualMind.Application", "VirtualMind.Application\VirtualMind.Application.csproj", "{C7E47AE3-D1C8-4395-88C8-AAE5818D5ACC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualMind.Domain", "VirtualMind.Domain\VirtualMind.Domain.csproj", "{4F80DA53-FD10-4CDF-93B5-CA99737CE7D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{C7E47AE3-D1C8-4395-88C8-AAE5818D5ACC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7E47AE3-D1C8-4395-88C8-AAE5818D5ACC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7E47AE3-D1C8-4395-88C8-AAE5818D5ACC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F80DA53-FD10-4CDF-93B5-CA99737CE7D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F80DA53-FD10-4CDF-93B5-CA99737CE7D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F80DA53-FD10-4CDF-93B5-CA99737CE7D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F80DA53-FD10-4CDF-93B5-CA99737CE7D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -36,6 +42,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{D72102A2-1750-4B82-B91A-1B132D86B094} = {92605427-E7F4-457F-B8E7-9A31412FD4B7}
 		{C7E47AE3-D1C8-4395-88C8-AAE5818D5ACC} = {0AEF29E2-7E5A-4012-AEB4-184C1BC44328}
+		{4F80DA53-FD10-4CDF-93B5-CA99737CE7D4} = {F3E702F6-1383-4A90-AE2C-2863A1E1EDD1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BBFF54F8-17FC-477F-852E-5089020CE7BF}

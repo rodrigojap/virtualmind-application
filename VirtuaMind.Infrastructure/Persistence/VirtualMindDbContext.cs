@@ -15,6 +15,13 @@ namespace VirtuaMind.Infrastructure.Persistence
 
         public DbSet<Operation> Operations { get; set; }
 
+        public DbSet<OperationCurrency> OperationCurrencies { get; set; }
+
+        public override int SaveChanges()
+        {
+            return base.SaveChanges();
+        }
+
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             foreach (Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<AuditableEntity> entry in ChangeTracker.Entries<AuditableEntity>())

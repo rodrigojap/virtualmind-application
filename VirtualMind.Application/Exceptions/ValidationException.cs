@@ -21,6 +21,12 @@ namespace VirtualMind.Application.Exceptions
                 .ToDictionary(failureGroup => failureGroup.Key, failureGroup => failureGroup.ToArray());
         }
 
+        public ValidationException(string type, string[] errorMessages)
+            : this()
+        {
+            Errors.Add(type, errorMessages);
+        }
+
         public IDictionary<string, string[]> Errors { get; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using VirtualMind.Application.Interfaces;
 using VirtuaMind.Infrastructure.Persistence;
@@ -21,7 +22,7 @@ namespace VirtuaMind.Infrastructure.DI
             services.AddDbContext<VirtualMindDbContext>(options =>
                                 options.UseInMemoryDatabase("VirtualMindDB"));
 
-            services.AddScoped<IVirtualMindDbContext>(provider => provider.GetService<VirtualMindDbContext>());
+            services.AddScoped<IVirtualMindDbContext>(provider => provider.GetService<VirtualMindDbContext>());                        
         }
 
         private static void AddRestServicesDependency(IServiceCollection services)

@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Collections.Generic;
 using VirtualMind.Application.Configurations;
+using VirtualMind.Application.Interfaces;
 using VirtualMind.WebApp.Filters;
 using VirtuaMind.Infrastructure.DI;
 
@@ -21,7 +23,7 @@ namespace VirtualMind.WebApp
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {            
+        {
             services.AddApplicationDI();
             services.RegisterGlobalFilters();
             services.AddInfrastructure();
@@ -53,6 +55,8 @@ namespace VirtualMind.WebApp
 
             app.UseRouting();
 
+            AddInitialValues(app);
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -72,6 +76,31 @@ namespace VirtualMind.WebApp
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+        }
+
+        private void AddInitialValues(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetService<IVirtualMindDbContext>();
+
+                var listCurrency = new List<Domain.Entities.OperationCurrency>
+            {
+                new Domain.Entities.OperationCurrency
+                {
+                    Currency = Domain.Enums.Currency.BRL,
+                    Limit = 300
+                },
+                new Domain.Entities.OperationCurrency
+                {
+                    Currency = Domain.Enums.Currency.USD,
+                    Limit = 200
+                },
+            };
+
+                context.OperationCurrencies.AddRange(listCurrency);
+                context.SaveChanges();
+            }
         }
     }
 }

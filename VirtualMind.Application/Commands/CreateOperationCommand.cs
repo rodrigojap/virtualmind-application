@@ -4,11 +4,14 @@ using VirtualMind.Application.Interfaces;
 using MediatR;
 using VirtualMind.Application.Queries;
 using VirtualMind.Application.DTOs;
-using System.Collections.Generic;
 using VirtualMind.Domain.Entities;
 using VirtualMind.Domain.Enums;
 using System;
 using VirtualMind.Application.Extensions;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using VirtualMind.Application.Exceptions;
+using System.Globalization;
 
 namespace VirtualMind.Application.Commands
 {
@@ -26,7 +29,8 @@ namespace VirtualMind.Application.Commands
         private readonly IVirtualMindDbContext VirtualMindDbContext;
         private readonly ICurrencyExchangeFactory CurrencyExchangeFactory;
 
-        public CreateOperationCommandHandler(IVirtualMindDbContext virtualMindDbContext, ICurrencyExchangeFactory currencyExchangeFactory)
+        public CreateOperationCommandHandler(IVirtualMindDbContext virtualMindDbContext,
+                                             ICurrencyExchangeFactory currencyExchangeFactory)
         {
             VirtualMindDbContext = virtualMindDbContext;
             CurrencyExchangeFactory = currencyExchangeFactory;
@@ -34,16 +38,15 @@ namespace VirtualMind.Application.Commands
 
         public async Task<int> Handle(CreateOperationCommand request, CancellationToken cancellationToken)
         {
-            var currentQuote = await GetCurrentQuote(request.CurrencyType);            
+            var currentQuote = await GetCurrentQuote(request.CurrencyType);
             var purchasedAmount = CalcPurchasedAmount(request, currentQuote);
+            var currency = (Currency)Enum.Parse(typeof(Currency), request.CurrencyType);
 
-
-            
-
+            await CheckLimitOperation(request.UserId, purchasedAmount, currency);
 
             var operation = new Operation
             {
-                Currency = (Currency)Enum.Parse(typeof(Currency), request.CurrencyType),
+                Currency = currency,
                 UserId = request.UserId,
                 RequestedAmount = request.RequestedAmount,
                 CurrentQuote = currentQuote.Purchase.ConvertStringToDecimal(),
@@ -51,11 +54,8 @@ namespace VirtualMind.Application.Commands
             };
 
             await VirtualMindDbContext.Operations.AddAsync(operation);
-            await VirtualMindDbContext.SaveChangesAsync();
-
-            return await Task.FromResult(0);
+            return await VirtualMindDbContext.SaveChangesAsync();            
         }
-
 
         private async Task<ExchangeRateDTO> GetCurrentQuote(string currencyType)
         {
@@ -70,9 +70,30 @@ namespace VirtualMind.Application.Commands
             return currnetQuote;
         }
 
-        private static decimal CalcPurchasedAmount(CreateOperationCommand request, ExchangeRateDTO currentQuote)
+        private decimal CalcPurchasedAmount(CreateOperationCommand request, ExchangeRateDTO currentQuote)
         {
             return decimal.Round(request.RequestedAmount / currentQuote.Purchase.ConvertStringToDecimal(), 2);
-        }        
+        }
+
+        private async Task CheckLimitOperation(int userId, decimal purchasedAmount, Currency currency)
+        {
+            var userSubmittedOperations = await VirtualMindDbContext.Operations
+                                        .Where(o => o.UserId == userId && o.Currency == currency && o.Created.Month == DateTime.Now.Month)
+                                        .ToListAsync();
+
+            var currencyParameters = await VirtualMindDbContext.OperationCurrencies.Where(c => c.Currency == currency)
+                                                                                   .FirstOrDefaultAsync();
+
+            var total = userSubmittedOperations.Sum(o => o.PurchasedAmount) + purchasedAmount;
+
+            if (total > currencyParameters.Limit)
+            {
+                throw new ValidationException("InvalidOperation", new[] 
+                { 
+                    $"This operation is not allowed because it exceeds the limits for the currency [{currency}] and user.",
+                    $"Limit: [{currencyParameters.Limit}], Operation Total: [{total.ToString(new CultureInfo("en-US"))}]"
+                });
+            }            
+        }
     }
 }

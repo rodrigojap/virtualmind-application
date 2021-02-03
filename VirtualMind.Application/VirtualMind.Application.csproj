@@ -16,8 +16,4 @@
     <ProjectReference Include="..\VirtualMind.Domain\VirtualMind.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Commom\Extensions\" />
-  </ItemGroup>
-
 </Project>

@@ -9,6 +9,10 @@ namespace VirtualMind.Application.Interfaces
     {
         DbSet<Operation> Operations { get; set; }
 
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken());        
+        DbSet<OperationCurrency> OperationCurrencies { get; set; }
+
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken());
+
+        int SaveChanges();
     }
 }

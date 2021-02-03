@@ -3,6 +3,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using VirtualMind.Application.Commom.Middlewares;
+using VirtualMind.Application.Queries;
 
 namespace VirtualMind.Application.Configurations
 {
@@ -12,7 +13,9 @@ namespace VirtualMind.Application.Configurations
         {            
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());                        
             services.AddMediatR(Assembly.GetExecutingAssembly());                        
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));            
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+
+            services.AddScoped<ICurrencyExchangeFactory, GetCurrencyExchangeFactory>();
 
             return services;
         }

@@ -14,17 +14,16 @@ namespace VirtualMind.Application.Queries
 
     public class GetCurrencyExchangeHandler : IRequestHandler<GetCurrencyExchange, List<ExchangeRateDTO>>
     {
-        private readonly IBancoProvinciaRestService BancoProvinciaRestService;
+        private readonly ICurrencyExchangeFactory CurrencyExchangeFactory;
 
-        public GetCurrencyExchangeHandler(IBancoProvinciaRestService bancoProvinciaService)
+        public GetCurrencyExchangeHandler(ICurrencyExchangeFactory currencyExchangeFactory)
         {
-            this.BancoProvinciaRestService = bancoProvinciaService;
+            CurrencyExchangeFactory = currencyExchangeFactory;
         }
 
         public async Task<List<ExchangeRateDTO>> Handle(GetCurrencyExchange request, CancellationToken cancellationToken)
         {
-            var result = await BancoProvinciaRestService
-                               .GetBRLExchangeRate();
+            var result = await CurrencyExchangeFactory.GetExchangeRate(request.CurrencyType);
 
             var exchangeList = new List<ExchangeRateDTO>
             {

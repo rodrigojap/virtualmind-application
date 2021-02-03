@@ -12,6 +12,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using VirtualMind.Application.Exceptions;
 using System.Globalization;
+using Microsoft.Extensions.Logging;
 
 namespace VirtualMind.Application.Commands
 {
@@ -28,12 +29,15 @@ namespace VirtualMind.Application.Commands
     {
         private readonly IVirtualMindDbContext VirtualMindDbContext;
         private readonly ICurrencyExchangeFactory CurrencyExchangeFactory;
+        private readonly ILogger<CreateOperationCommandHandler> Logger;
 
         public CreateOperationCommandHandler(IVirtualMindDbContext virtualMindDbContext,
-                                             ICurrencyExchangeFactory currencyExchangeFactory)
+                                             ICurrencyExchangeFactory currencyExchangeFactory,
+                                             ILogger<CreateOperationCommandHandler> logger)
         {
             VirtualMindDbContext = virtualMindDbContext;
             CurrencyExchangeFactory = currencyExchangeFactory;
+            this.Logger = logger;
         }
 
         public async Task<int> Handle(CreateOperationCommand request, CancellationToken cancellationToken)
@@ -88,6 +92,8 @@ namespace VirtualMind.Application.Commands
 
             if (total > currencyParameters.Limit)
             {
+                Logger.LogInformation($"InvalidOperation[CheckLimitOperation] - user {userId} - at: {DateTime.Now}");
+
                 throw new ValidationException("InvalidOperation", new[] 
                 { 
                     $"This operation is not allowed because it exceeds the limits for the currency [{currency}] and user.",

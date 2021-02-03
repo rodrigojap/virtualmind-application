@@ -12,7 +12,9 @@ namespace VirtualMind.Application.Configurations
         public static IServiceCollection AddApplicationDI(this IServiceCollection services)
         {            
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());                        
-            services.AddMediatR(Assembly.GetExecutingAssembly());                        
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
 
             services.AddScoped<ICurrencyExchangeFactory, GetCurrencyExchangeFactory>();

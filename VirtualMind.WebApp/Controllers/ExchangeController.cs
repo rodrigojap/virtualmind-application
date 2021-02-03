@@ -12,14 +12,11 @@ namespace VirtualMind.WebApp.Controllers
     [ApiController]
     [Route("[controller]")]
     public class ExchangeController : ControllerBase
-    {       
-        private readonly ILogger<ExchangeController> _logger;
+    {               
         private readonly IMediator _mediator;        
 
-        public ExchangeController(ILogger<ExchangeController> logger, 
-                                  IMediator mediator)
-        {
-            _logger = logger;
+        public ExchangeController(IMediator mediator)
+        {            
             _mediator = mediator;            
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using VirtualMind.Application.DTOs;
+using VirtualMind.Application.Interfaces;
 
 namespace VirtualMind.Application.Queries
 {
@@ -13,18 +14,29 @@ namespace VirtualMind.Application.Queries
 
     public class GetCurrencyExchangeHandler : IRequestHandler<GetCurrencyExchange, List<ExchangeRateDTO>>
     {
+        private readonly IBancoProvinciaRestService BancoProvinciaRestService;
+
+        public GetCurrencyExchangeHandler(IBancoProvinciaRestService bancoProvinciaService)
+        {
+            this.BancoProvinciaRestService = bancoProvinciaService;
+        }
+
         public async Task<List<ExchangeRateDTO>> Handle(GetCurrencyExchange request, CancellationToken cancellationToken)
-        {                                    
-            //MUST BE A SERVICE API
-            var exchange = new ExchangeRateDTO();
-            exchange.LastUpdate = "today";
-            exchange.Purchase = "12.00";
-            exchange.Sale = "10";
+        {
+            var result = await BancoProvinciaRestService
+                               .GetBRLExchangeRate();
 
-            var exchangeList = new List<ExchangeRateDTO>();
-            exchangeList.Add(exchange);
+            var exchangeList = new List<ExchangeRateDTO>
+            {
+                new ExchangeRateDTO
+                {
+                    Purchase = result[0],
+                    Sale = result[1],
+                    LastUpdate = result[2]
+                }
+            };            
 
-            return await Task.FromResult(exchangeList);
+            return exchangeList;
         }
     }
 }

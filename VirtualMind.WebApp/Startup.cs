@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using VirtualMind.Application.Configurations;
 using VirtualMind.WebApp.Filters;
+using VirtuaMind.Infrastructure.DI;
 
 namespace VirtualMind.WebApp
 {
@@ -23,6 +24,7 @@ namespace VirtualMind.WebApp
         {            
             services.AddApplicationDI();
             services.RegisterGlobalFilters();
+            services.AddInfrastructure();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

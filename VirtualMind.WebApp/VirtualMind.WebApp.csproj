@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\VirtualMind.Application\VirtualMind.Application.csproj" />
+    <ProjectReference Include="..\VirtuaMind.Infrastructure\VirtuaMind.Infrastructure.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

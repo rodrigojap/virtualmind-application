@@ -3,7 +3,7 @@ using VirtualMind.Domain.Enums;
 
 namespace VirtualMind.Application.Queries
 {
-    public class GetCurrencyExchangeValidator : AbstractValidator<GetCurrencyExchange>
+    public class GetCurrencyExchangeValidator : AbstractValidator<GetCurrencyExchangeQuery>
     {
         public GetCurrencyExchangeValidator()
         {

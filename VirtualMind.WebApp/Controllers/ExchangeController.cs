@@ -1,12 +1,11 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using VirtualMind.Application.Commands;
 using VirtualMind.Application.DTOs;
-using VirtualMind.Application.Interfaces;
 using VirtualMind.Application.Queries;
+using MediatR;
 
 namespace VirtualMind.WebApp.Controllers
 {
@@ -15,43 +14,25 @@ namespace VirtualMind.WebApp.Controllers
     public class ExchangeController : ControllerBase
     {       
         private readonly ILogger<ExchangeController> _logger;
-        private readonly IMediator _mediator;
-        private readonly IVirtualMindDbContext _virtualMindDbContext;
+        private readonly IMediator _mediator;        
 
         public ExchangeController(ILogger<ExchangeController> logger, 
-                                  IMediator mediator,
-                                  IVirtualMindDbContext virtualMindDbContext)
+                                  IMediator mediator)
         {
             _logger = logger;
-            _mediator = mediator;
-            _virtualMindDbContext = virtualMindDbContext;
+            _mediator = mediator;            
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ExchangeRateDTO>> GetExchangeRate([FromQuery]GetCurrencyExchange getCurrencyExchange)
+        public async Task<IEnumerable<ExchangeRateDTO>> GetExchangeRate([FromQuery]GetCurrencyExchangeQuery getCurrencyExchange)
         {
-            var response = await this._mediator.Send(getCurrencyExchange);
-
-            return response;
+            return await _mediator.Send(getCurrencyExchange);            
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostExchangeOperation()
-        {                                    
-            //await _virtualMindDbContext.Operations.AddAsync(new Domain.Entities.Operation
-            //{
-            //    Currency = Domain.Enums.Currency.BRL,
-            //    CurrentQuote = 10,
-            //    PurchasedAmount = 15,
-            //    RequestedAmount = 15,
-            //    UserId = 1               
-            //});
-
-            //await _virtualMindDbContext.SaveChangesAsync();
-
-            //var list = await _virtualMindDbContext.Operations.AsNoTracking().ToListAsync();
-
-            return Ok();
+        public async Task<ActionResult<int>> PostExchangeOperation([FromBody]CreateOperationCommand createOperationCommand)
+        {
+            return await _mediator.Send(createOperationCommand);                     
         }
     }
 }

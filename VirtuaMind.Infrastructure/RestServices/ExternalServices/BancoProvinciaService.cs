@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using VirtualMind.Application.Extensions;
 using VirtualMind.Application.Interfaces;
-using VirtuaMind.Infrastructure.FunctionalServices;
 using VirtuaMind.Infrastructure.RestServices.Template;
 
 namespace VirtuaMind.Infrastructure.RestServices.ExternalServices

@@ -6,12 +6,12 @@ using VirtualMind.Application.DTOs;
 
 namespace VirtualMind.Application.Queries
 {
-    public class GetCurrencyExchange : IRequest<List<ExchangeRateDTO>>
+    public class GetCurrencyExchangeQuery : IRequest<List<ExchangeRateDTO>>
     {        
         public string CurrencyType { get; set; }        
     }    
 
-    public class GetCurrencyExchangeHandler : IRequestHandler<GetCurrencyExchange, List<ExchangeRateDTO>>
+    public class GetCurrencyExchangeHandler : IRequestHandler<GetCurrencyExchangeQuery, List<ExchangeRateDTO>>
     {
         private readonly ICurrencyExchangeFactory CurrencyExchangeFactory;
 
@@ -20,7 +20,7 @@ namespace VirtualMind.Application.Queries
             CurrencyExchangeFactory = currencyExchangeFactory;
         }
 
-        public async Task<List<ExchangeRateDTO>> Handle(GetCurrencyExchange request, CancellationToken cancellationToken)
+        public async Task<List<ExchangeRateDTO>> Handle(GetCurrencyExchangeQuery request, CancellationToken cancellationToken)
         {
             var result = await CurrencyExchangeFactory.GetExchangeRate(request.CurrencyType);
 

@@ -13,11 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\" />
+    <ProjectReference Include="..\VirtualMind.Domain\VirtualMind.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\VirtualMind.Domain\VirtualMind.Domain.csproj" />
+    <Folder Include="Commom\Extensions\" />
   </ItemGroup>
 
 </Project>

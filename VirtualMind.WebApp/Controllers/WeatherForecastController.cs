@@ -28,7 +28,7 @@ namespace VirtualMind.WebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<WeatherForecast>> Get([FromQuery]GetCurrencyExchange getCurrencyExchange)
+        public async Task<IEnumerable<WeatherForecast>> Get([FromQuery]GetCurrencyExchangeQuery getCurrencyExchange)
         {
             var resposne = await this._mediator.Send(getCurrencyExchange);
 

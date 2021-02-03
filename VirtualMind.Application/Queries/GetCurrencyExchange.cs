@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using VirtualMind.Application.DTOs;
-using VirtualMind.Application.Interfaces;
 
 namespace VirtualMind.Application.Queries
 {

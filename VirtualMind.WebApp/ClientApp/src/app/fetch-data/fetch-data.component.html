@@ -1,5 +1,9 @@
 <h1 id="tableLabel">Quotes</h1>
 
+<div *ngIf="loading">
+    <ng-spinner size="5" type="border" color="warning"></ng-spinner>
+</div>
+
 <p> Look the quotation of the day</p>
 
 <div *ngIf="dolar">

@@ -16,6 +16,7 @@ export class FetchDataComponent {
   quote$: Observable<QuoteState>;
   dolar: quote;
   real: quote;
+  loading: boolean;
 
   constructor(private http: HttpClient,
     @Inject('BASE_URL') private baseUrl: string,
@@ -36,8 +37,14 @@ export class FetchDataComponent {
 
   getAllQuote() {
     console.log('fetching cote');
+    this.loading = true;
     this.getDollarQuote();
-    this.getRealQuote();
+    this.getRealQuote();   
+    
+    //to see the spinner
+    setTimeout(() => {
+      this.loading = false;
+    }, 2000);
   }
 
   getDollarQuote() {

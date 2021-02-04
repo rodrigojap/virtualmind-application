@@ -8,6 +8,7 @@ import { NgSpinnerModule } from 'ng-bootstrap-spinner';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { PurchaseComponent } from './purchase/purchase.component';
 
 import { StoreModule } from '@ngrx/store';
 import { QuoteReducer } from './store/quote/quoteReducer';
@@ -16,7 +17,8 @@ import { QuoteReducer } from './store/quote/quoteReducer';
   declarations: [
     AppComponent,
     NavMenuComponent,    
-    FetchDataComponent
+    FetchDataComponent,
+    PurchaseComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -25,7 +27,8 @@ import { QuoteReducer } from './store/quote/quoteReducer';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: FetchDataComponent },      
-      { path: 'quote', component: FetchDataComponent },      
+      { path: 'quote', component: FetchDataComponent }, 
+      { path: 'purchase', component: PurchaseComponent },      
     ]),
     StoreModule.forRoot({
       quotes: QuoteReducer

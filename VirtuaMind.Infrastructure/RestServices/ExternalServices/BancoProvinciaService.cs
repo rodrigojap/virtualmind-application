@@ -29,6 +29,9 @@ namespace VirtuaMind.Infrastructure.RestServices.ExternalServices
         {
             var content = await GetUSDExchangeRate();
 
+            if (content == null)            
+                return null;            
+
             var convertedList = new List<string>() 
             { 
                 content[0].ConvertUSDToBRL(),

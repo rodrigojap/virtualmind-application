@@ -1,33 +1,34 @@
-<h1 id="tableLabel">Quotes</h1>
-
 <div *ngIf="loading">
     <ng-spinner size="5" type="border" color="warning"></ng-spinner>
 </div>
 
-<p> Look the quotation of the day</p>
+<div *ngIf="!loading">
+    <h1 id="tableLabel">Quotes</h1>
 
-<div *ngIf="dolar">
-    <h4>DOLAR (USD)</h4>
-    <div>
-        <ul>
-            <li>Purchase Value: {{ dolar.purchase }}</li>
-            <li>Sale Value: {{ dolar.sale }}</li>
-            <li>Last Update: {{ dolar.lastUpdate }}</li>
-        </ul>      
+    <p> Look the quotation of the day</p>
+
+    <div *ngIf="dolar">
+        <h4>DOLAR (USD)</h4>
+        <div>
+            <ul>
+                <li>Purchase Value: {{ dolar.purchase }}</li>
+                <li>Sale Value: {{ dolar.sale }}</li>
+                <li>Last Update: {{ dolar.lastUpdate }}</li>
+            </ul>
+        </div>
     </div>
-</div>
 
 
-<div *ngIf="real">
-    <h4>REAL (BRL)</h4>
-    <div>
-        <ul>
-            <li>Purchase Value: {{ real.purchase }}</li>
-            <li>Sale Value: {{ real.sale }}</li>
-            <li>Last Update: {{ real.lastUpdate }}</li>
-        </ul>     
+    <div *ngIf="real">
+        <h4>REAL (BRL)</h4>
+        <div>
+            <ul>
+                <li>Purchase Value: {{ real.purchase }}</li>
+                <li>Sale Value: {{ real.sale }}</li>
+                <li>Last Update: {{ real.lastUpdate }}</li>
+            </ul>
+        </div>
     </div>
+
+    <button (click)="getAllQuote()">Update Quotation</button>
 </div>
-
-<button (click)="getAllQuote()">Update Quotation</button>
-

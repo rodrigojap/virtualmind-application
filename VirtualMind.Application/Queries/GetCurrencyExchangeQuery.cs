@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using VirtualMind.Application.DTOs;
 using MediatR;
+using VirtualMind.Application.Exceptions;
 
 namespace VirtualMind.Application.Queries
 {
@@ -22,6 +23,14 @@ namespace VirtualMind.Application.Queries
         public async Task<ExchangeRateDTO> Handle(GetCurrencyExchangeQuery request, CancellationToken cancellationToken)
         {
             var result = await CurrencyExchangeFactory.GetExchangeRate(request.CurrencyType);
+
+            if (result == null)
+            {
+                throw new ValidationException("UnavailableService", new[]
+                {
+                    $"The requested external service is not available now :("
+                });
+            }
 
             var exchangeList = new ExchangeRateDTO
             {

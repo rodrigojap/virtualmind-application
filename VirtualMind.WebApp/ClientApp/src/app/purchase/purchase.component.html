@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="col-6">
+        <app-fetch-data></app-fetch-data>
+    </div>
+    <div class="col-6">
+        <div *ngIf="loading">
+            <ng-spinner size="5" type="border" color="warning"></ng-spinner>
+        </div>
+        
+        <div *ngIf="!loading">
+            <h4>Make a purchase</h4>
+        
+            <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+                <div class="row">
+                    <div class="col-3">
+                        <label for="register-user">User ID:</label><br>
+                        <label for="register-amount">Pesos:</label><br>
+                        <label for="register-currency">Pick a currency:</label>
+                    </div>
+                    <div class="col-3">                
+                        <input name="userId" type="number" id="register-user" ngModel required #first="ngModel">    
+                        <input name="amount" type="number" id="register-amount" ngModel required>    
+                        <select name="currency" id="register-currency" ngModel required>
+                            <option value="USD">Dólar USD</option>
+                            <option value="BRL">Real BRL</option>
+                        </select>
+                    </div>                   
+                </div>                       
+    
+                <button>Submit</button>
+            </form>   
+            
+            <div *ngIf="messages && messages.length > 0">
+                <div *ngFor="let message of messages">
+                    <ul>
+                        <li>{{message}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>       
+    </div>
+</div>

@@ -1,24 +1,29 @@
-<h1 id="tableLabel">Weather forecast</h1>
+<h1 id="tableLabel">Quotes</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
+<p> Look the quotation of the day</p>
 
-<p *ngIf="!forecasts"><em>Loading...</em></p>
+<div *ngIf="dolar">
+    <h4>DOLAR (USD)</h4>
+    <div>
+        <ul>
+            <li>Purchase Value: {{ dolar.purchase }}</li>
+            <li>Sale Value: {{ dolar.sale }}</li>
+            <li>Last Update: {{ dolar.lastUpdate }}</li>
+        </ul>      
+    </div>
+</div>
 
-<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="forecasts">
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>Temp. (C)</th>
-      <th>Temp. (F)</th>
-      <th>Summary</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let forecast of forecasts">
-      <td>{{ forecast.date }}</td>
-      <td>{{ forecast.temperatureC }}</td>
-      <td>{{ forecast.temperatureF }}</td>
-      <td>{{ forecast.summary }}</td>
-    </tr>
-  </tbody>
-</table>
+
+<div *ngIf="real">
+    <h4>REAL (BRL)</h4>
+    <div>
+        <ul>
+            <li>Purchase Value: {{ real.purchase }}</li>
+            <li>Sale Value: {{ real.sale }}</li>
+            <li>Last Update: {{ real.lastUpdate }}</li>
+        </ul>     
+    </div>
+</div>
+
+<button (click)="getAllQuote()">Update Quotation</button>
+

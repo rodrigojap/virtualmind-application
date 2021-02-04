@@ -21,7 +21,7 @@ namespace VirtualMind.WebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ExchangeRateDTO>> GetExchangeRate([FromQuery]GetCurrencyExchangeQuery getCurrencyExchange)
+        public async Task<ExchangeRateDTO> GetExchangeRate([FromQuery]GetCurrencyExchangeQuery getCurrencyExchange)
         {
             return await _mediator.Send(getCurrencyExchange);            
         }

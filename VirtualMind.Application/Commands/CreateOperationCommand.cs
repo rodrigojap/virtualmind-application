@@ -58,12 +58,13 @@ namespace VirtualMind.Application.Commands
             };
 
             await VirtualMindDbContext.Operations.AddAsync(operation);
+            
             return await VirtualMindDbContext.SaveChangesAsync();            
         }
 
         private async Task<ExchangeRateDTO> GetCurrentQuote(string currencyType)
         {
-            var result = await CurrencyExchangeFactory.GetExchangeRate(currencyType);
+            var result = await CurrencyExchangeFactory.GetExchangeRate(currencyType);           
 
             var currnetQuote = new ExchangeRateDTO
             {

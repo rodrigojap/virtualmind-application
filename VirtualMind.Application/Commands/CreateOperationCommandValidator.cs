@@ -13,12 +13,12 @@ namespace VirtualMind.Application.Commands
 
             RuleFor(input => input.RequestedAmount)
                 .GreaterThan(0).WithMessage("[RequestedAmount] must be greater Than 0")
-                .NotNull().WithMessage("[RequestedAmount] can't be null!");
+                .NotNull().WithMessage("[RequestedAmount] can't be null");
 
             RuleFor(input => input.CurrencyType)
-                .NotNull().WithMessage("[CurrencyType] can't be null!")
-                .NotEmpty().WithMessage("[CurrencyType] field is required!")
-                .IsEnumName(typeof(Currency), false).WithMessage("Invalid [CurrencyType]!");
+                .NotNull().WithMessage("[CurrencyType] can't be null")
+                .NotEmpty().WithMessage("[CurrencyType] can't be empty")
+                .IsEnumName(typeof(Currency), false).WithMessage("Invalid [CurrencyType]");
         }
     }
 }
